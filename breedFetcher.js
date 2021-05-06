@@ -22,15 +22,23 @@
 const request = require('request');
 
 const breed = process.argv[2];
-const url = 'https://api.thecatapi.com/v1/breeds/search?q=' + breed;
+const url = 'https://api.thecatapi.com/v1/bzklcnmreeds/search?q=' + breed;
 
 request(url, (error, response, body) => {
   if (error) {
-    return console.log(error);
+    return console.log('Error:', error);
+
+  } else if (response && response.statusCode !== 200) {
+    console.log('Check url');
+    return;
+
   } else if (body === '[]') {
     console.log("Breed not found");
+    return;
+
   } else {
     const data = JSON.parse(body)[0].description;
-    return console.log(data);
+    console.log(data);
+    return;
   }
 });
